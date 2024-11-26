@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio de Thiago Santos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f6f6f6;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: rgb(144, 113, 113);
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: rgb(228, 14, 14);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgb(241, 205, 205);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            margin: 5px 0;
+        }
+
+        form input,
+        form textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Portfólio de Thiago Santos</h1>
+        <p>Desenvolvedor Full Stack | Criando Soluções Inovadoras</p>
+    </header>
+    <nav> <a href="#habilidades">Habilidades</a> <a href="#projetos">Projetos</a> <a href="#contato">Contato</a> </nav>
+    <main>
+        <section id="habilidades">
+            <h2>Habilidades</h2>
+            <p>Abaixo estão listadas minhas principais habilidades técnicas:</p>
+            <table>
+                <tr>
+                    <th>Habilidade</th>
+                    <th>Nível</th>
+                </tr>
+                <tr>
+                    <td>HTML</td>
+                    <td>Avançado</td>
+                </tr>
+                <tr>
+                    <td>CSS</td>
+                    <td>Avançado</td>
+                </tr>
+                <tr>
+                    <td>JavaScript</td>
+                    <td>Intermediário</td>
+                </tr>
+                <tr>
+                    <td>Python</td>
+                    <td>Avançado</td>
+                </tr>
+            </table>
+        </section>
+        <section id="projetos">
+            <h2>Projetos</h2>
+            <p>Confira alguns dos meus projetos recentes:</p>
+            <ul>
+                <li><a href="https://github.com/Thiago Santos-portfolio/projeto1" target="_blank">Sistema de Gerenciamento</a>
+                </li>
+                <li><a href="https://github.com/Thiago Santos-portfolio/projeto2" target="_blank">Aplicativo de Tarefas</a></li>
+                <li><a href="https://github.com/Thiago Santos-portfolio/projeto3" target="_blank">E-commerce</a></li>
+            </ul>
+        </section>
+        <section id="contato">
+            <h2>Contato</h2>
+            <p>Preencha o formulário abaixo para entrar em contato:</p>
+            <form action="https://formspree.io/f/meusdados" method="POST"> <label for="nome">Nome:</label> <input
+                    type="text" id="nome" name="nome" required> <label for="email">E-mail:</label> <input type="email"
+                    id="email" name="email" required> <label for="mensagem">Mensagem:</label> <textarea id="mensagem"
+                    name="mensagem" rows="4" required></textarea> <button type="submit">Enviar</button> </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Thiago Santos. Todos os direitos reservados.</p>
+    </footer>
+</body>
+
+</html>
