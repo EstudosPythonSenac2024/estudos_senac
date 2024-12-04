@@ -2,18 +2,90 @@
     padding: auto;
     margin: auto;
     box-sizing: border-box;
+    flex-direction: column;
    }
    
    body {
-    background: gray;
+    background: rgb(247, 244, 244);
     display: flex;
     justify-content: center;
     font-family: monospace;
+    display: flex;
    }
-   .c-card {
-    padding: 10px;
-    margin: 10px;
-    color: whitesmoke;
-    box-shadow: 0 0 20px rgba(93, 93, 93, 0.2);
+
+    h1 {
     text-align: center;
+
+    }
+
+    h2 {
+    text-align: center;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    font-size: small;
+    align-items: center;
+    flex-direction: column;
+    }
+
+    p {
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    margin: 5px;
+    font-size: small;
+    flex-direction: column;
+    }
+
+    section {
+    justify-content: center;
+    background-color: rgba(250, 24, 8, 0.911);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.973);
+    width: auto;
+    height: auto;
+    font-size: small;
+    flex-direction: column;
+    align-items: center;
+    border: 1px;
+    }
+
+   .c-card {
+    justify-content: center;
+    padding: auto;
+    margin: auto;
+    color: whitesmoke;
+    box-sizing: inherit;
+    box-shadow: 0 0 10px rgba(207, 53, 53, 0.696);
+    text-align: center;
+    width: auto;
+    height: auto;
+    flex-direction: column;
+   }
+
+   .c-card img {
+    border-radius: 1rem;
+   }
+   
+   .c-card h2 {
+    padding: 0.5rem;
+    font-size: 1.5rem;
+   }
+   
+   .c-card p {
+    width: 20rem;
+    text-align: left;
+    padding: 0.5rem;
+   }
+   
+   .icone-midias {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    color: #fff;
+   }
+   
+   .icone-midias:hover {
+    color: rgb(253, 226, 15);
    }
