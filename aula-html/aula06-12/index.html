@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWC Sec - Soluções SOC</title>
+    <link rel="stylesheet" href="styles-pc.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <!-- Logo -->
+            <div class="logo">JWC Sec</div>
+
+            <!-- Botão do Menu Hambúrguer -->
+            <button class="menu-toggle" aria-label="Abrir Menu">
+                ☰
+            </button>
+
+            <!-- Navegação -->
+            <nav class="nav">
+                <a href="#">Home</a>
+                <a href="#">Serviços</a>
+                <a href="#">Sobre Nós</a>
+                <a href="#">Blog</a>
+                <a href="#">Contato</a>
+                <a href="#" class="btn">Solicitar Demonstração</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Proteja sua empresa com soluções SOC avançadas</h1>
+            <p>Monitoramento, análise e resposta a ameaças 24/7.</p>
+            <div class="buttons">
+                <a href="#" class="btn">Saiba Mais</a>
+                <a href="#" class="btn-secondary">Fale Conosco</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <div class="container">
+            <h2>Por que escolher nossas soluções SOC?</h2>
+            <div class="benefit-list">
+                <div class="benefit">
+                    <h3>Monitoramento Proativo</h3>
+                    <p>Identifique ameaças antes que se tornem problemas.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Resposta Rápida</h3>
+                    <p>Atuamos imediatamente em incidentes críticos.</p>
+                </div>
+                <div class="benefit">
+                    <h3>Relatórios Personalizados</h3>
+                    <p>Insights claros para melhorar a segurança.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 JWC Sec. Todos os direitos reservados.</p>
+            <p>Email: <a href="mailto:contato@jwcsec.com">contato@jwcsec.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+            document.querySelector('.nav').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
