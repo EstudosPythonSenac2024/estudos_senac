@@ -18,6 +18,14 @@ lista = ('palavra', True, 13, 3.2)
 print(lista) # ['palavra', True, 13, 3.2]
 print(lista[1]) # True
 ```
+Caso queira acessar o ultimo item de sua lista, basta informar -1:
+
+```
+lista = ('palavra', True, 13, 3.2)
+
+print(lista)
+print(lista[-1]) # True
+```
 
 ## Tuplas:
 Coleção ordenada e imutável de elementos;
