@@ -27,6 +27,23 @@ print(lista)
 print(lista[-1]) # True
 ```
 
+Para remover itens da lista também existem dois métodos: o remove e o pop.
+
+Com o método remove devemos passar por parâmetro o próprio item a ser excluído da lista.
+
+#Remove um item na lista Python
+```
+lista_bandas = ["Metallica","AC/DC","The Who","Ramones"]
+lista_bandas.remove("Ramones") # remove a banda Ramones da lista Python
+print(lista_bandas) #['Metallica', 'AC/DC', 'The Who']
+```
+Já com o método pop, é necessário passar por parâmetro o índice do item a ser excluído da lista.
+```
+lista_bandas = ["Metallica","AC/DC","The Who","Ramones"]
+lista_bandas.pop(0) # remove a banda Metallica da lista Python
+print(lista_bandas) #['AC/DC', 'The Who', 'Ramones']
+```
+
 ## Tuplas:
 Coleção ordenada e imutável de elementos;
 Permite armazenar itens duplicados;
