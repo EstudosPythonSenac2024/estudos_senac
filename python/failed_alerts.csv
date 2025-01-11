@@ -1,0 +1,46 @@
+name,language,integration,technology,tags
+AWS CloudTrail Log Created,kuery,aws,rules/integrations/aws,
+AWS CloudTrail Log Deleted,kuery,aws,rules/integrations/aws,
+Defense Evasion,kuery,aws,rules/integrations/aws,"Domain: Cloud, Data Source: AWS, Data Source: Amazon Web Services, Tactic: Defense Evasion"
+AWS RDS DB Instance Restored,eql,aws,rules/integrations/aws,
+AWS S3 Bucket Configuration Deletion,kuery,aws,rules/integrations/aws,
+AWS S3 Bucket Expiration Lifecycle Configuration Added,kuery,aws,rules/integrations/aws,
+AWS WAF Access Control List Deletion,kuery,aws,rules/integrations/aws,
+AWS EC2 Full Network Packet Capture Detected,kuery,aws,rules/integrations/aws,
+AWS RDS Snapshot Export,kuery,aws,rules/integrations/aws,
+AWS EC2 Encryption Disabled,kuery,aws,rules/integrations/aws,
+Impact,kuery,aws,rules/integrations/aws,"Domain: Cloud, Data Source: AWS, Data Source: Amazon Web Services, Tactic: Impact"
+AWS IAM Deactivation of MFA Device,kuery,aws,rules/integrations/aws,
+AWS RDS Security Group Deletion,kuery,aws,rules/integrations/aws,
+AWS RDS Instance/Cluster Stoppage,kuery,aws,rules/integrations/aws,
+AWS EC2 Security Group Configuration Change,kuery,aws,rules/integrations/aws,
+AWS RDS Cluster Creation,kuery,aws,rules/integrations/aws,
+AWS Redshift Cluster Creation,kuery,aws,rules/integrations/aws,
+AWS Route Table Created,kuery,aws,rules/integrations/aws,
+AWS Route Table Modified or Deleted,kuery,aws,rules/integrations/aws,
+AWS STS GetSessionToken Abuse,kuery,aws,rules/integrations/aws,
+Credential Access,kuery,azure,rules/integrations/azure,"Domain: Cloud, Data Source: Azure, Tactic: Credential Access"
+Azure Application Credential Modification,kuery,azure,rules/integrations/azure,
+Defense Evasion,kuery,azure,rules/integrations/azure,"Domain: Cloud, Data Source: Azure, Tactic: Defense Evasion"
+Azure Service Principal Addition,kuery,azure,rules/integrations/azure,
+Azure Firewall Policy Deletion,kuery,azure,rules/integrations/azure,
+Azure Network Watcher Deletion,kuery,azure,rules/integrations/azure,
+Initial Access,kuery,azure,rules/integrations/azure,"Domain: Cloud, Data Source: Azure, Use Case: Asset Visibility, Tactic: Discovery"
+Defense Evasion,kuery,azure,rules/integrations/azure,"Domain: Cloud, Data Source: Azure, Use Case: Log Auditing, Tactic: Impact"
+Azure Active Directory PowerShell Sign-in,kuery,azure,rules/integrations/azure,
+Persistence,kuery,azure,rules/integrations/azure,"Domain: Cloud, Data Source: Azure, Use Case: Identity and Access Audit, Tactic: Initial Access"
+Persistence,kuery,azure,rules/integrations/azure,"Domain: Cloud, Data Source: Azure, Use Case: Identity and Access Audit, Tactic: Persistence"
+GCP Pub/Sub Topic Creation,kuery,gcp,rules/integrations/gcp,
+GCP Pub/Sub Topic Deletion,kuery,gcp,rules/integrations/gcp,
+GCP IAM Role Deletion,kuery,gcp,rules/integrations/gcp,
+Impact,kuery,gcp,rules/integrations/gcp,"Domain: Cloud, Data Source: GCP, Data Source: Google Cloud Platform, Tactic: Impact"
+GCP IAM Service Account Key Deletion,kuery,gcp,rules/integrations/gcp,
+Initial Access,kuery,kubernetes,rules/integrations/kubernetes,"Data Source: Kubernetes, Tactic: Execution, Tactic: Initial Access, Tactic: Defense Evasion"
+Connection to External Network via Telnet,eql,"endpoint, sentinel_one_cloud_funnel",rules/linux,
+Connection to Internal Network via Telnet,eql,"endpoint, sentinel_one_cloud_funnel",rules/linux,
+Kerberos Pre-authentication Disabled for User,kuery,"system, windows",rules/windows,
+Potential Antimalware Scan Interface Bypass via PowerShell,kuery,windows,rules/windows,
+Suspicious Windows Powershell Arguments,eql,"windows, system, sentinel_one_cloud_funnel, m365_defender, crowdstrike",rules/windows,
+Account Configured with Never-Expiring Password,kuery,"system, windows",rules/windows,
+N/A,N/A,N/A,rules/_deprecated,
+Execution,kuery,windows,rules_building_block,"Domain: Endpoint, OS: Windows, Use Case: Threat Detection, Tactic: Collection, Data Source: PowerShell Logs, Rule Type: BBR"
