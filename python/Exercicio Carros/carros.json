@@ -1,0 +1,92 @@
+[
+    {
+        "id_cadastro": 1,
+        "modelo": "Corsa",
+        "ano": "2014",
+        "marca": "Chevrolet",
+        "cor": "Vermelho",
+        "combustivel": "Flex",
+        "quilometragem": "58"
+    },
+    {
+        "id_cadastro": 2,
+        "modelo": "MONTANA",
+        "ano": "2014",
+        "marca": "Chevrolet",
+        "cor": "Vermelho",
+        "combustivel": "Flex",
+        "quilometragem": "58"
+    },
+    {
+        "id_cadastro": 3,
+        "modelo": "SILVERADO",
+        "ano": "2014",
+        "marca": "Chevrolet",
+        "cor": "Vermelho",
+        "combustivel": "Flex",
+        "quilometragem": "58"
+    },
+    {
+        "id_cadastro": 4,
+        "modelo": "S10",
+        "ano": "2014",
+        "marca": "Chevrolet",
+        "cor": "Vermelho",
+        "combustivel": "Flex",
+        "quilometragem": "58"
+    },
+    {
+        "id_cadastro": 5,
+        "modelo": "ONIX PLUS",
+        "ano": "2014",
+        "marca": "Chevrolet",
+        "cor": "Vermelho",
+        "combustivel": "Flex",
+        "quilometragem": "58"
+    },
+    {
+        "id_cadastro": 6,
+        "modelo": "Corsa",
+        "ano": "2014",
+        "marca": "Chevrolet",
+        "cor": "Vermelho",
+        "combustivel": "Flex",
+        "quilometragem": "58"
+    },
+    {
+        "id_cadastro": 7,
+        "modelo": "MONTANA",
+        "ano": "2014",
+        "marca": "Chevrolet",
+        "cor": "Vermelho",
+        "combustivel": "Flex",
+        "quilometragem": "58"
+    },
+    {
+        "id_cadastro": 8,
+        "modelo": "SILVERADO",
+        "ano": "2015",
+        "marca": "Chevrolet",
+        "cor": "Vermelho",
+        "combustivel": "Flex",
+        "quilometragem": "58"
+    },
+    {
+        "id_cadastro": 9,
+        "modelo": "S10",
+        "ano": "2014",
+        "marca": "Chevrolet",
+        "cor": "Vermelho",
+        "combustivel": "Flex",
+        "quilometragem": "58"
+    },
+    {
+        "id_cadastro": 10,
+        "modelo": "ONIX PLUS",
+        "ano": "2014",
+        "marca": "Chevrolet",
+        "cor": "Vermelho",
+        "combustivel": "Flex",
+        "quilometragem": "58"
+    }
+]
