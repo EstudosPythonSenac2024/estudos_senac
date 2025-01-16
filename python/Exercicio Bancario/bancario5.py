@@ -2,7 +2,7 @@ import json
 import os
 
 class ContaCorrente:
-    def __init__(self, agencia, numero_conta, titular, saldo_inicial=0, limite_negativo=-1000):
+    def __init__(self, agencia, numero_conta, titular, saldo_inicial=0, limite_negativo=-2000):
         self.agencia = agencia
         self.numero_conta = numero_conta
         self.titular = titular

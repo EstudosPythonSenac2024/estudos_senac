@@ -2,7 +2,13 @@
     "agencia": "1523",
     "numero_conta": "17171-1",
     "titular": "Luciana Teixeira",
-    "saldo": 3000.0,
+    "saldo": 6000.0,
     "limite_negativo": -1000,
-    "historico": []
+    "historico": [
+        {
+            "operacao": "Transfer\u00eancia Recebida",
+            "valor": 3000.0,
+            "saldo": 6000.0
+        }
+    ]
 }
