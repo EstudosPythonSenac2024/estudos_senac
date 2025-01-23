@@ -1,0 +1,26 @@
+<h1>Histórico de Operações</h1>
+<p>Conta: {{ conta.numero_conta }}</p>
+<p>Titular: {{ conta.titular }}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Operação</th>
+            <th>Valor</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in historico %}
+        <tr>
+            <td>{{ item.data|date:"d/m/Y H:i" }}</td>
+            <td>{{ item.operacao }}</td>
+            <td>R$ {{ item.valor }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Nenhuma operação registrada.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

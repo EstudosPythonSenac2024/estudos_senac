@@ -1,0 +1,15 @@
+<h1>Transferência</h1>
+<p>Conta de origem: {{ conta_origem.numero_conta }}</p>
+<p>Titular: {{ conta_origem.titular }}</p>
+<p>Saldo atual: R$ {{ conta_origem.saldo }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="numero_destino">Número da Conta de Destino:</label>
+    <input type="text" name="numero_destino" required>
+
+    <label for="valor">Valor da Transferência:</label>
+    <input type="number" step="0.01" name="valor" required>
+
+    <button type="submit">Transferir</button>
+</form>

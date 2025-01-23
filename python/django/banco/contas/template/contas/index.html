@@ -1,0 +1,13 @@
+<h1>Bem-vindo ao Sistema Bancário</h1>
+
+<h2>Contas Disponíveis</h2>
+<ul>
+    {% for conta in contas %}
+    <li>
+        <strong>{{ conta.titular }}</strong> - Conta: {{ conta.numero_conta }}
+        <a href="{% url 'exibir_conta' conta.numero_conta %}">Ver opções</a>  <!-- Link para acessar as ações -->
+    </li>
+    {% endfor %}
+</ul>
+
+<p><a href="{% url 'criar_conta' %}">Criar Nova Conta</a></p>
