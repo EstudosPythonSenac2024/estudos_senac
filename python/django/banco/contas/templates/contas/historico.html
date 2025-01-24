@@ -1,33 +1,28 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Operações</title>
+</head>
+<body>
+    <h1>Histórico de Operações</h1>
+    <p><strong>Conta:</strong> {{ conta.titular }} ({{ conta.numero_conta }})</p>
+    <p><strong>Saldo Atual:</strong> R$ {{ conta.saldo }}</p>
 
-{% block title %}Histórico de Operações{% endblock %}
-
-{% block content %}
-<h1>Histórico de Operações</h1>
-<p>Conta: {{ conta.numero_conta }}</p>
-<p>Titular: {{ conta.titular }}</p>
-
-<table>
-    <thead>
-        <tr>
-            <th>Data</th>
-            <th>Operação</th>
-            <th>Valor</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in historico %}
-        <tr>
-            <td>{{ item.data|date:"d/m/Y H:i" }}</td>
-            <td>{{ item.operacao }}</td>
-            <td>R$ {{ item.valor }}</td>
-        </tr>
+    <h2>Operações:</h2>
+    <ul>
+        {% for operacao in historico %}
+            <li>
+                <strong>{{ operacao.data|date:"d/m/Y H:i" }}:</strong> 
+                {{ operacao.operacao }} - R$ {{ operacao.valor }} 
+                (Saldo: R$ {{ operacao.saldo }})
+            </li>
         {% empty %}
-        <tr>
-            <td colspan="3">Nenhuma operação registrada.</td>
-        </tr>
+            <li>Não há operações registradas para esta conta.</li>
         {% endfor %}
-    </tbody>
-</table>
-<a href="{% url 'exibir_conta' conta.numero_conta %}">Voltar</a>
-{% endblock %}
+    </ul>
+
+    <p><a href="{% url 'detalhes' conta.id %}">Voltar para Detalhes da Conta</a></p>
+</body>
+</html>

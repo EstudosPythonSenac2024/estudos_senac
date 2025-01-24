@@ -1,17 +1,22 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depositar Dinheiro</title>
+</head>
+<body>
+    <h1>Depositar Dinheiro</h1>
+    <p><strong>Conta:</strong> {{ conta.titular }} ({{ conta.numero_conta }})</p>
+    <p><strong>Saldo Atual:</strong> R$ {{ conta.saldo }}</p>
 
-{% block title %}Depósito{% endblock %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="valor">Valor a Depositar:</label>
+        <input type="number" id="valor" name="valor" step="0.01" required>
+        <button type="submit">Confirmar Depósito</button>
+    </form>
 
-{% block content %}
-<h1>Depósito</h1>
-<p>Conta: {{ conta.numero_conta }}</p>
-<p>Titular: {{ conta.titular }}</p>
-
-<form method="post">
-    {% csrf_token %}
-    <label for="valor">Valor do Depósito:</label>
-    <input type="number" step="0.01" name="valor" required>
-    <button type="submit">Depositar</button>
-</form>
-<a href="{% url 'exibir_conta' conta.numero_conta %}">Voltar</a>
-{% endblock %}
+    <p><a href="{% url 'detalhes' conta.id %}">Voltar para Detalhes da Conta</a></p>
+</body>
+</html>

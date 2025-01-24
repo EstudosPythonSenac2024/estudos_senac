@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Conta</title>
+</head>
+<body>
+    <h1>Detalhes da Conta</h1>
+    <p><strong>Nome:</strong> {{ conta.titular }}</p>
+    <p><strong>Número da Conta:</strong> {{ conta.numero_conta }}</p>
+    <p><strong>Saldo:</strong> R$ {{ conta.saldo }}</p>
+    <p><strong>Limite Negativo:</strong> R$ {{ conta.limite_negativo }}</p>
+
+    <h2>Ações</h2>
+    <ul>
+        <li><a href="{% url 'depositar' conta.id %}">Depositar</a></li>
+        <li><a href="{% url 'sacar' conta.id %}">Sacar</a></li>
+        <li><a href="{% url 'transferir' conta.id %}">Transferir</a></li>
+        <li><a href="{% url 'historico' conta.id %}">Ver Histórico</a></li>
+    </ul>
+
+    <p><a href="{% url 'index' %}">Voltar para a Lista de Contas</a></p>
+</body>
+</html>

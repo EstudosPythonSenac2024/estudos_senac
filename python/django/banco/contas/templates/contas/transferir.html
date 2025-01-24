@@ -1,15 +1,31 @@
-<h1>Transferência</h1>
-<p>Conta de origem: {{ conta_origem.numero_conta }}</p>
-<p>Titular: {{ conta_origem.titular }}</p>
-<p>Saldo atual: R$ {{ conta_origem.saldo }}</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transferir Dinheiro</title>
+</head>
+<body>
+    <h1>Transferir Dinheiro</h1>
+    <p><strong>Conta Origem:</strong> {{ conta.titular }} ({{ conta.numero_conta }})</p>
+    <p><strong>Saldo Atual:</strong> R$ {{ conta.saldo }}</p>
 
-<form method="post">
-    {% csrf_token %}
-    <label for="numero_destino">Número da Conta de Destino:</label>
-    <input type="text" name="numero_destino" required>
+    <form method="post">
+        {% csrf_token %}
+        <label for="conta_destino">Conta de Destino:</label>
+        <select id="conta_destino" name="conta_destino">
+            {% for conta_destino in contas %}
+                {% if conta_destino.id != conta.id %}
+                    <option value="{{ conta_destino.id }}">{{ conta_destino.titular }} ({{ conta_destino.numero_conta }})</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br><br>
+        <label for="valor">Valor a Transferir:</label>
+        <input type="number" id="valor" name="valor" step="0.01" required>
+        <button type="submit">Confirmar Transferência</button>
+    </form>
 
-    <label for="valor">Valor da Transferência:</label>
-    <input type="number" step="0.01" name="valor" required>
-
-    <button type="submit">Transferir</button>
-</form>
+    <p><a href="{% url 'detalhes' conta.id %}">Voltar para Detalhes da Conta</a></p>
+</body>
+</html>

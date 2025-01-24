@@ -1,28 +1,16 @@
-{% extends "base.html" %}
+<h1>Bem-vindo ao Sistema Bancário</h1>
+<a href="/">Início</a> | <a href="/criar-conta/">Criar Conta</a>
+<h2>Contas Correntes</h2>
 
-{% block title %}Contas Correntes{% endblock %}
-
-{% block content %}
-<h1>Contas Correntes</h1>
-
-{% if contas %}
-    <ul>
-        {% for conta in contas %}
+<ul>
+    {% for conta in contas %}
         <li>
-            <strong>{{ conta.titular }}</strong> - Conta: {{ conta.numero_conta }}
-            <ul>
-                <li><a href="{% url 'exibir_conta' conta.numero_conta %}">Detalhes</a></li>
-                <li><a href="{% url 'depositar' conta.numero_conta %}">Depositar</a></li>
-                <li><a href="{% url 'sacar' conta.numero_conta %}">Sacar</a></li>
-                <li><a href="{% url 'transferir' conta.numero_conta %}">Transferir</a></li>
-                <li><a href="{% url 'historico' conta.numero_conta %}">Histórico</a></li>
-            </ul>
+            <a href="{% url 'detalhes' conta.id %}">
+                {{ conta.titular }} - Conta: {{ conta.numero_conta }}
+            </a>
         </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Não há contas cadastradas.</p>
-{% endif %}
+    {% endfor %}
+</ul>
 
-<a href="{% url 'criar_conta' %}">Criar Nova Conta</a>
-{% endblock %}
+<a href="/criar-conta/">Criar Nova Conta</a>
+<footer>© 2025 Sistema Bancário</footer>
