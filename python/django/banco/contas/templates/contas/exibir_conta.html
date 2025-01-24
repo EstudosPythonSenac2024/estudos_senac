@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Detalhes da Conta{% endblock %}
+
+{% block content %}
+<h1>Detalhes da Conta</h1>
+<p><strong>Número da Conta:</strong> {{ conta.numero_conta }}</p>
+<p><strong>Agência:</strong> {{ conta.agencia }}</p>
+<p><strong>Titular:</strong> {{ conta.titular }}</p>
+<p><strong>Saldo:</strong> R$ {{ conta.saldo }}</p>
+
+<h2>Ações</h2>
+<ul>
+    <li><a href="{% url 'depositar' conta.numero_conta %}">Depositar</a></li>
+    <li><a href="{% url 'sacar' conta.numero_conta %}">Sacar</a></li>
+    <li><a href="{% url 'transferir' conta.numero_conta %}">Transferir</a></li>
+    <li><a href="{% url 'historico' conta.numero_conta %}">Ver Histórico</a></li>
+</ul>
+
+<a href="{% url 'index' %}">Voltar para a página inicial</a>
+{% endblock %}

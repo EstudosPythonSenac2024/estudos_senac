@@ -1,176 +1,98 @@
-from django.shortcuts import render, get_object_or_404
-from .models import ContaCorrente,Historico
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .models import ContaCorrente
+from .forms import ContaForm
+from django.core.paginator import Paginator
+from django.shortcuts import render
+
+
+def index(request):
+    """Página inicial que lista todas as contas cadastradas com links para ações."""
+    contas = ContaCorrente.objects.all()  # Recupera todas as contas
+    return render(request, 'contas/index.html', {'contas': contas})
 
 def criar_conta(request):
     if request.method == 'POST':
-        agencia = request.POST['agencia']
-        numero_conta = request.POST['numero_conta']
-        titular = request.POST['titular']
-        saldo = float(request.POST.get('saldo', 0))
-        limite_negativo = float(request.POST.get('limite_negativo', -2000))
+        form = ContaForm(request.POST)
+        if form.is_valid():
+            conta = form.save()
+            messages.success(request, "Conta criada com sucesso!")
+            return redirect('exibir_conta', numero_conta=conta.numero_conta)
+        else:
+            messages.error(request, "Erro ao criar a conta. Verifique os dados.")
+    else:
+        form = ContaForm()
+    return render(request, 'contas/criar_conta.html', {'form': form})
 
-        conta = ContaCorrente.objects.create(
-            agencia=agencia,
-            numero_conta=numero_conta,
-            titular=titular,
-            saldo=saldo,
-            limite_negativo=limite_negativo
-        )
-        return render(request, 'conta_criada.html', {'conta': conta})
 
-    return render(request, 'criar_conta.html')
+
+def exibir_conta(request, numero_conta):
+    """Exibe os detalhes de uma conta específica."""
+    conta = get_object_or_404(ContaCorrente, numero_conta=numero_conta)
+    return render(request, 'contas/exibir_conta.html', {'conta': conta})
+
 
 def depositar(request, numero_conta):
-    # Busca a conta pelo número
     conta = get_object_or_404(ContaCorrente, numero_conta=numero_conta)
-
     if request.method == 'POST':
-        # Recebe o valor do depósito do formulário
         valor = float(request.POST['valor'])
-
         if valor > 0:
-            # Atualiza o saldo da conta
-            conta.saldo += valor
-            conta.save()
-
-            # Salva no histórico
-            Historico.objects.create(
-                conta=conta,
-                operacao='Depósito',
-                valor=valor
-            )
-
-            return render(request, 'contas/sucesso.html', {
-                'mensagem': f"Depósito de R$ {valor:.2f} realizado com sucesso!"
-            })
+            conta.realizar_operacao("Depósito", valor)
+            messages.success(request, f"Depósito de R$ {valor:.2f} realizado com sucesso!")
         else:
-            return render(request, 'contas/erro.html', {
-                'mensagem': "O valor do depósito deve ser maior que zero."
-            })
-
-    # Renderiza a página de depósito
+            messages.error(request, "O valor do depósito deve ser maior que zero.")
+        return redirect('exibir_conta', numero_conta=numero_conta)
     return render(request, 'contas/depositar.html', {'conta': conta})
 
-def historico(request, numero_conta):
-    # Busca a conta pelo número
-    conta = get_object_or_404(ContaCorrente, numero_conta=numero_conta)
-    # Recupera o histórico ordenado pela data mais recente
-    historico = conta.historico.all().order_by('-data')
 
-    return render(request, 'contas/historico.html', {
-        'conta': conta,
-        'historico': historico
-    })
 
 def sacar(request, numero_conta):
-    # Busca a conta pelo número
+    """View para realizar saques de uma conta."""
     conta = get_object_or_404(ContaCorrente, numero_conta=numero_conta)
 
     if request.method == 'POST':
         valor = float(request.POST['valor'])
-
-        if valor > 0:
-            if conta.saldo - valor >= conta.limite_negativo:
-                # Atualiza o saldo e salva
-                conta.saldo -= valor
-                conta.save()
-
-                # Registra no histórico
-                Historico.objects.create(
-                    conta=conta,
-                    operacao='Saque',
-                    valor=-valor
-                )
-
-                return render(request, 'contas/sucesso.html', {
-                    'mensagem': f"Saque de R$ {valor:.2f} realizado com sucesso!"
-                })
-            else:
-                return render(request, 'contas/erro.html', {
-                    'mensagem': "Saldo insuficiente para realizar o saque."
-                })
-        else:
-            return render(request, 'contas/erro.html', {
-                'mensagem': "O valor do saque deve ser maior que zero."
-            })
+        try:
+            conta.realizar_operacao("Saque", valor)
+            messages.success(request, f"Saque de R$ {valor:.2f} realizado com sucesso!")
+        except Exception as e:
+            messages.error(request, str(e))
+        return redirect('exibir_conta', numero_conta=numero_conta)
 
     return render(request, 'contas/sacar.html', {'conta': conta})
 
+
 def transferir(request, numero_conta):
-    # Conta de origem
+    """View para realizar transferências entre contas."""
     conta_origem = get_object_or_404(ContaCorrente, numero_conta=numero_conta)
 
     if request.method == 'POST':
         numero_destino = request.POST['numero_destino']
         valor = float(request.POST['valor'])
 
-        if valor > 0:
-            # Busca a conta de destino
-            try:
-                conta_destino = ContaCorrente.objects.get(numero_conta=numero_destino)
-            except ContaCorrente.DoesNotExist:
-                return render(request, 'contas/erro.html', {
-                    'mensagem': "Conta de destino não encontrada."
-                })
-
-            if conta_origem.saldo - valor >= conta_origem.limite_negativo:
-                # Realiza a transferência
-                conta_origem.saldo -= valor
-                conta_destino.saldo += valor
-
-                conta_origem.save()
-                conta_destino.save()
-
-                # Registra no histórico
-                Historico.objects.create(
-                    conta=conta_origem,
-                    operacao='Transferência Enviada',
-                    valor=-valor
-                )
-                Historico.objects.create(
-                    conta=conta_destino,
-                    operacao='Transferência Recebida',
-                    valor=valor
-                )
-
-                return render(request, 'contas/sucesso.html', {
-                    'mensagem': f"Transferência de R$ {valor:.2f} realizada com sucesso!"
-                })
-            else:
-                return render(request, 'contas/erro.html', {
-                    'mensagem': "Saldo insuficiente para realizar a transferência."
-                })
-        else:
-            return render(request, 'contas/erro.html', {
-                'mensagem': "O valor da transferência deve ser maior que zero."
-            })
+        try:
+            conta_destino = ContaCorrente.objects.get(numero_conta=numero_destino)
+            conta_origem.realizar_operacao("Transferência Enviada", valor, conta_destino=conta_destino)
+            messages.success(request, f"Transferência de R$ {valor:.2f} realizada com sucesso!")
+        except ContaCorrente.DoesNotExist:
+            messages.error(request, "Conta de destino não encontrada.")
+        except Exception as e:
+            messages.error(request, str(e))
+        return redirect('exibir_conta', numero_conta=numero_conta)
 
     return render(request, 'contas/transferir.html', {'conta_origem': conta_origem})
 
-def criar_conta(request):
-    if request.method == 'POST':
-        agencia = request.POST['agencia']
-        numero_conta = request.POST['numero_conta']
-        titular = request.POST['titular']
-        saldo_inicial = float(request.POST['saldo_inicial'])
 
-        conta = ContaCorrente.objects.create(
-            agencia=agencia,
-            numero_conta=numero_conta,
-            titular=titular,
-            saldo=saldo_inicial
-        )
-
-        return render(request, 'contas/sucesso.html', {
-            'mensagem': f"Conta de {titular} criada com sucesso!"
-        })
-
-    return render(request, 'contas/criar_conta.html')
-
-def index(request):
-    contas = ContaCorrente.objects.all()  # Recupera todas as contas
-    return render(request, 'contas/index.html', {'contas': contas})
-
-def exibir_conta(request, numero_conta):
+def historico(request, numero_conta):
     conta = get_object_or_404(ContaCorrente, numero_conta=numero_conta)
-    return render(request, 'contas/exibir_conta.html', {'conta': conta})
+    historico = conta.historico.all().order_by('-data')
+    
+    # Paginação
+    paginator = Paginator(historico, 10)  # Mostra 10 operações por página
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'contas/historico.html', {
+        'conta': conta,
+        'page_obj': page_obj
+    })

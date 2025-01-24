@@ -2,6 +2,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('contas/', include('contas.urls')),  # Incluindo as URLs do app 'contas'
+    path('admin/', admin.site.urls),        # Acesso ao Django Admin
+    path('', include('contas.urls')),      # Rota principal redireciona para o app 'contas'
 ]

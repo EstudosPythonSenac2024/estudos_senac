@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Contas Correntes{% endblock %}
+
+{% block content %}
+<h1>Contas Correntes</h1>
+
+{% if contas %}
+    <ul>
+        {% for conta in contas %}
+        <li>
+            <strong>{{ conta.titular }}</strong> - Conta: {{ conta.numero_conta }}
+            <ul>
+                <li><a href="{% url 'exibir_conta' conta.numero_conta %}">Detalhes</a></li>
+                <li><a href="{% url 'depositar' conta.numero_conta %}">Depositar</a></li>
+                <li><a href="{% url 'sacar' conta.numero_conta %}">Sacar</a></li>
+                <li><a href="{% url 'transferir' conta.numero_conta %}">Transferir</a></li>
+                <li><a href="{% url 'historico' conta.numero_conta %}">Histórico</a></li>
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Não há contas cadastradas.</p>
+{% endif %}
+
+<a href="{% url 'criar_conta' %}">Criar Nova Conta</a>
+{% endblock %}

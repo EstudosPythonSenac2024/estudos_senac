@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Criar Conta{% endblock %}
+
+{% block content %}
+<h1>Criar Nova Conta</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Criar Conta</button>
+</form>
+
+<a href="{% url 'index' %}">Voltar para a página inicial</a>
+{% endblock %}

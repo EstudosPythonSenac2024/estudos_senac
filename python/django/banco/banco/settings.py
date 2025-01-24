@@ -58,8 +58,8 @@ ROOT_URLCONF = 'banco.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [],  # Deixe vazio se os templates estão nos apps
+        'APP_DIRS': True,  # Ativa a busca por templates nas pastas dos apps
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
