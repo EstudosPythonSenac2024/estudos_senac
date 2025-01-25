@@ -3,29 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transferir Dinheiro</title>
+    <title>Transferir</title>
 </head>
 <body>
-    <h1>Transferir Dinheiro</h1>
-    <p><strong>Conta Origem:</strong> {{ conta.titular }} ({{ conta.numero_conta }})</p>
-    <p><strong>Saldo Atual:</strong> R$ {{ conta.saldo }}</p>
-
+    <h1>Transferir da Conta: {{ conta.numero_conta }}</h1>
+    {% if erro %}
+        <p style="color: red;">{{ erro }}</p>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
-        <label for="conta_destino">Conta de Destino:</label>
-        <select id="conta_destino" name="conta_destino">
-            {% for conta_destino in contas %}
-                {% if conta_destino.id != conta.id %}
-                    <option value="{{ conta_destino.id }}">{{ conta_destino.titular }} ({{ conta_destino.numero_conta }})</option>
-                {% endif %}
+        <label for="valor">Valor:</label>
+        <input type="number" name="valor" step="0.01" required>
+        <label for="conta_destino">Conta Destino:</label>
+        <select name="conta_destino" required>
+            {% for c in contas %}
+                <option value="{{ c.id }}">{{ c.numero_conta }} - {{ c.titular }}</option>
             {% endfor %}
         </select>
-        <br><br>
-        <label for="valor">Valor a Transferir:</label>
-        <input type="number" id="valor" name="valor" step="0.01" required>
-        <button type="submit">Confirmar Transferência</button>
+        <button type="submit">Confirmar</button>
     </form>
-
-    <p><a href="{% url 'detalhes' conta.id %}">Voltar para Detalhes da Conta</a></p>
+    <p><a href="{% url 'detalhes' conta.id %}">Voltar</a></p>
 </body>
 </html>

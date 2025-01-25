@@ -3,20 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Depositar Dinheiro</title>
+    <title>Depositar</title>
 </head>
 <body>
-    <h1>Depositar Dinheiro</h1>
-    <p><strong>Conta:</strong> {{ conta.titular }} ({{ conta.numero_conta }})</p>
-    <p><strong>Saldo Atual:</strong> R$ {{ conta.saldo }}</p>
-
+    <h1>Depositar na Conta: {{ conta.numero_conta }}</h1>
     <form method="post">
         {% csrf_token %}
-        <label for="valor">Valor a Depositar:</label>
-        <input type="number" id="valor" name="valor" step="0.01" required>
-        <button type="submit">Confirmar Depósito</button>
+        <label for="valor">Valor:</label>
+        <input type="number" name="valor" step="0.01" required>
+        <button type="submit">Confirmar</button>
     </form>
-
-    <p><a href="{% url 'detalhes' conta.id %}">Voltar para Detalhes da Conta</a></p>
+    <p><a href="{% url 'detalhes' conta.id %}">Voltar</a></p>
 </body>
 </html>
