@@ -2,10 +2,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('<int:conta_id>/', views.detalhes, name='detalhes'),
-    path('<int:conta_id>/depositar/', views.depositar, name='depositar'),
-    path('<int:conta_id>/sacar/', views.sacar, name='sacar'),
-    path('<int:conta_id>/transferir/', views.transferir, name='transferir'),
-    path('<int:conta_id>/historico/', views.historico, name='historico'),
+    path('', views.lista_clientes, name='lista_clientes'),  # Página inicial (lista de clientes)
+    path('<int:conta_id>/', views.detalhes, name='detalhes'),  # Detalhes de uma conta específica
+    path('<int:conta_id>/historico/', views.historico, name='historico'),  # Histórico
+    path('<int:conta_id>/sacar/', views.sacar, name='sacar'),  # Saque
+    path('<int:conta_id>/depositar/', views.depositar, name='depositar'),  # Depósito
+    path('<int:conta_id>/transferir/', views.transferir, name='transferir'),  # Transferência
 ]

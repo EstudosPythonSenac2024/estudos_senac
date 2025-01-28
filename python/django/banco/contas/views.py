@@ -1,13 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .models import ContaCorrente
+from .models import ContaCorrente, Historico
 from .forms import ContaForm
 from django.db import models
 from django.core.paginator import Paginator
-from django.shortcuts import render
 from django.utils.timezone import now
-
-
+from decimal import Decimal
+from django.core.exceptions import ValidationError
 
 def index(request):
     """Página inicial que lista todas as contas cadastradas com links para ações."""
@@ -20,6 +19,21 @@ def detalhes(request, conta_id):
 
     # Renderiza os detalhes da conta
     return render(request, 'contas/detalhes_conta_corrente.html', {'conta': conta})
+
+def depositar(request, conta_id):
+    conta = ContaCorrente.objects.get(pk=conta_id)
+    if request.method == 'POST':
+        valor = Decimal(request.POST['valor'])
+        conta.saldo += valor
+        conta.save()
+
+        Historico.objects.create(
+            conta=conta,
+            tipo="Depósito",
+            valor=valor
+        )
+        return redirect('detalhes', conta_id=conta_id)
+    return render(request, 'contas/depositar.html', {'conta': conta})
 
 def criar_conta(request):
     if request.method == 'POST':
@@ -35,66 +49,65 @@ def criar_conta(request):
     return render(request, 'contas/criar_conta.html', {'form': form})
 
 
-def depositar(request, conta_id):
-    conta = get_object_or_404(ContaCorrente, pk=conta_id)
-
-    if request.method == "POST":
-        valor = float(request.POST.get("valor"))
-        conta.saldo += valor
-        conta.save()
-        
-        # Registra no histórico
-        conta.historico.create(operacao="Depósito", valor=valor, saldo=conta.saldo)
-        return redirect('detalhes', conta_id=conta.id)
-
-    return render(request, 'contas/depositar.html', {'conta': conta})
-
 def sacar(request, conta_id):
     conta = get_object_or_404(ContaCorrente, pk=conta_id)
 
     if request.method == "POST":
-        valor = float(request.POST.get("valor"))
-        if conta.saldo - valor >= conta.limite_negativo:
-            conta.saldo -= valor
-            conta.save()
-            conta.historico.create(operacao="Saque", valor=-valor, saldo=conta.saldo)
-        else:
-            return render(request, 'contas/sacar.html', {'conta': conta, 'erro': "Saldo insuficiente."})
+        valor = Decimal(request.POST.get("valor"))
+        if conta.saldo - valor < conta.limite_negativo:
+            return render(request, 'contas/sacar.html', {
+                'conta': conta,
+                'erro': "Saldo insuficiente para o saque."
+            })
 
-        return redirect('detalhes', conta_id=conta.id)
+        conta.saldo -= valor  # Subtrai do saldo da conta
+        conta.save()
+
+        # Registra a operação no histórico
+        Historico.objects.create(
+            conta=conta,
+            operacao="Saque",
+            valor=-valor,
+            saldo=conta.saldo
+        )
+        return redirect('detalhes', conta_id=conta.id)  # Redireciona aos detalhes da conta
 
     return render(request, 'contas/sacar.html', {'conta': conta})
 
 def transferir(request, conta_id):
-    conta_origem = get_object_or_404(ContaCorrente, pk=conta_id)
-    contas = ContaCorrente.objects.exclude(pk=conta_id)
+    conta_origem = get_object_or_404(ContaCorrente, id=conta_id)
 
-    if request.method == "POST":
-        valor = float(request.POST.get("valor"))
-        conta_destino_id = request.POST.get("conta_destino")
-        conta_destino = get_object_or_404(ContaCorrente, pk=conta_destino_id)
+    if request.method == 'POST':
+        numero_conta_destino = request.POST.get('conta_destino')  # Número da conta destino
+        valor = Decimal(request.POST.get('valor', '0'))  # Converte para Decimal
 
-        if conta_origem.saldo - valor >= conta_origem.limite_negativo:
-            conta_origem.saldo -= valor
-            conta_destino.saldo += valor
-            conta_origem.save()
-            conta_destino.save()
+        try:
+            # Busca a conta pelo número
+            conta_destino = ContaCorrente.objects.get(numero_conta=numero_conta_destino)
+            conta_origem.realizar_operacao('Transferência Enviada', valor, conta_destino)
+            return redirect('detalhes', conta_id=conta_id)
+        except ContaCorrente.DoesNotExist:
+            return render(request, 'contas/transferir.html', {
+                'conta': conta_origem,
+                'error': 'Conta de destino inválida!',
+            })
+        except ValidationError as e:
+            return render(request, 'contas/transferir.html', {
+                'conta': conta_origem,
+                'error': str(e),
+            })
 
-            conta_origem.historico.create(operacao="Transferência Enviada", valor=-valor, saldo=conta_origem.saldo)
-            conta_destino.historico.create(operacao="Transferência Recebida", valor=valor, saldo=conta_destino.saldo)
-
-            return redirect('detalhes', conta_id=conta_origem.id)
-        else:
-            return render(request, 'contas/transferir.html', {'conta': conta_origem, 'contas': contas, 'erro': "Saldo insuficiente."})
-
-    return render(request, 'contas/transferir.html', {'conta': conta_origem, 'contas': contas})
-
+    return render(request, 'contas/transferir.html', {'conta': conta_origem})
 
 def historico(request, conta_id):
-    # Busca a conta
-    conta = get_object_or_404(ContaCorrente, pk=conta_id)
-    # Busca todas as operações associadas a essa conta
-    historico = conta.historico.all()
+    # Obtém a conta pelo ID
+    conta = get_object_or_404(ContaCorrente, id=conta_id)
+    # Filtra os históricos relacionados à conta
+    historico = Historico.objects.filter(conta=conta).order_by('-data')
+    # Passa a conta para o template
+    return render(request, 'contas/historico.html', {'historico': historico, 'conta': conta})
 
-    # Renderiza o template com os dados
-    return render(request, 'contas/historico.html', {'conta': conta, 'historico': historico})
+# View para exibir a lista de clientes
+def lista_clientes(request):
+    contas = ContaCorrente.objects.all()
+    return render(request, 'contas/lista_clientes.html', {'contas': contas})

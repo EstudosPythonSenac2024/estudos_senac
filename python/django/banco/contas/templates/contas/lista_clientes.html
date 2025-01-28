@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Clientes</title>
+</head>
+<body>
+    <h1>Lista de Clientes</h1>
+    <ul>
+        {% for conta in contas %}
+            <li>
+                <a href="{% url 'detalhes' conta.id %}">
+                    {{ conta.titular }} - Conta: {{ conta.numero_conta }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

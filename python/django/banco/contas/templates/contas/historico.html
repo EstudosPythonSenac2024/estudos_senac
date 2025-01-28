@@ -7,11 +7,27 @@
 </head>
 <body>
     <h1>Histórico da Conta: {{ conta.numero_conta }}</h1>
-    <ul>
-        {% for item in historico %}
-            <li>{{ item.data_hora }} - {{ item.operacao }}: R$ {{ item.valor }} (Saldo: R$ {{ item.saldo }})</li>
-        {% endfor %}
-    </ul>
-    <p><a href="{% url 'detalhes' conta.id %}">Voltar para os detalhes</a></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Data e Hora</th>
+                <th>Operação</th>
+                <th>Valor</th>
+                <th>Saldo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in historico %}
+            <tr>
+                <td>{{ item.data_hora }}</td>
+                <td>{{ item.operacao }}</td>
+                <td>{{ item.valor }}</td>
+                <td>{{ item.saldo }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'detalhes' conta.id %}">Voltar</a>
+    
 </body>
 </html>

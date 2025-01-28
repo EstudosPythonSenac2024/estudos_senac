@@ -9,6 +9,6 @@
     <p><strong>Número da Conta:</strong> {{ conta.numero_conta }}</p>
     <p><strong>Saldo:</strong> R$ {{ conta.saldo }}</p>
     <p><strong>Limite Negativo:</strong> R$ {{ conta.limite_negativo }}</p>
-    <a href="{% url 'index' %}">Voltar para a Lista de Contas</a>
+    <a href="{% url 'detalhes' conta.id %}">Voltar</a>
 </body>
 </html>

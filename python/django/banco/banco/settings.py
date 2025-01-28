@@ -59,8 +59,8 @@ ROOT_URLCONF = 'banco.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # Deixe vazio se os templates estão nos apps
-        'APP_DIRS': True,  # Ativa a busca por templates nas pastas dos apps
+        'DIRS': [],  # Deixe vazio para usar o padrão das apps
+        'APP_DIRS': True,  # Habilitar a busca nos diretórios "templates/" das apps
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -71,6 +71,8 @@ TEMPLATES = [
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'banco.wsgi.application'
 

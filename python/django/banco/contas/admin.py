@@ -7,5 +7,5 @@ class ContaCorrenteAdmin(admin.ModelAdmin):
 
 @admin.register(Historico)
 class HistoricoAdmin(admin.ModelAdmin):
-    list_display = ('conta', 'operacao', 'valor', 'data')
-    list_filter = ('operacao', 'data')
+    list_display = ('id', 'operacao', 'valor', 'data')  # Certifique-se de que os campos existem no modelo
+    list_filter = ('operacao', 'data')  # Filtrar usando campos válidos do modelo

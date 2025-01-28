@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.utils.timezone import now
+from decimal import Decimal
 
 
 class ContaCorrente(models.Model):
@@ -17,6 +17,8 @@ class ContaCorrente(models.Model):
         """
         Realiza operações como saque, depósito ou transferência.
         """
+        valor = Decimal(valor)  # Garante que 'valor' seja Decimal
+
         if valor <= 0:
             raise ValidationError(f"O valor da operação '{tipo}' deve ser maior que zero.")
 
@@ -36,11 +38,13 @@ class ContaCorrente(models.Model):
             self.saldo -= valor
             conta_destino.saldo += valor
             conta_destino.save()
+
             Historico.objects.create(
                 conta=conta_destino,
                 operacao="Transferência Recebida",
                 valor=valor,
-                saldo=conta_destino.saldo
+                tipo="Crédito",
+                saldo=conta_destino.saldo,
             )
 
         # Salva as alterações e cria o histórico da operação
@@ -48,17 +52,23 @@ class ContaCorrente(models.Model):
         Historico.objects.create(
             conta=self,
             operacao=tipo,
-            valor=-valor if tipo == "Saque" or tipo == "Transferência Enviada" else valor,
-            saldo=self.saldo
+            valor=-valor if tipo in ["Saque", "Transferência Enviada"] else valor,
+            tipo="Débito" if tipo in ["Saque", "Transferência Enviada"] else "Crédito",
+            saldo=self.saldo,
         )
+
+    def verificar_limite(self):
+        """Retorna o saldo disponível considerando o limite negativo."""
+        return self.saldo - self.limite_negativo
 
 
 class Historico(models.Model):
-    conta = models.ForeignKey(ContaCorrente, on_delete=models.CASCADE, related_name='historico')
-    operacao = models.CharField(max_length=50)  # Ex.: "Depósito", "Saque", "Transferência"
+    conta = models.ForeignKey(ContaCorrente, on_delete=models.CASCADE)
+    operacao = models.CharField(max_length=50)
     valor = models.DecimalField(max_digits=10, decimal_places=2)
+    data = models.DateTimeField(auto_now_add=True)
+    tipo = models.CharField(max_length=50, default="Crédito")  # Crédito ou Débito
     saldo = models.DecimalField(max_digits=10, decimal_places=2)
-    data = models.DateTimeField(default=now)
 
     def __str__(self):
-        return f"{self.operacao} - R$ {self.valor:.2f} ({self.data.strftime('%d/%m/%Y %H:%M')})"
+        return f"{self.operacao} - R$ {self.valor} ({self.tipo})"
