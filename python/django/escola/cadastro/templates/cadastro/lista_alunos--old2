@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Alunos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 90%;  /* Reduzindo o tamanho dos gráficos */
+            max-width: 400px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">Painel de Alunos</h1>
+
+        <div class="row">
+            <!-- Coluna da Tabela de Alunos (Esquerda) -->
+            <div class="col-md-6">
+                <h2 class="mb-3">Lista de Alunos</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Curso</th>
+                            <th>Turma</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for aluno in alunos %}
+                        <tr>
+                            <td>{{ aluno.nome }}</td>
+                            <td>{{ aluno.curso }}</td>
+                            <td>{{ aluno.turma }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center">Nenhum aluno cadastrado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Coluna dos Gráficos (Direita) -->
+            <div class="col-md-6 text-center">
+                <h2>Distribuição de Cursos</h2>
+                <div class="chart-container">
+                    <canvas id="graficoCursos"></canvas>
+                </div>
+
+                <h2 class="mt-4">Distribuição de Turmas</h2>
+                <div class="chart-container">
+                    <canvas id="graficoTurmas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var cursosLabels = {{ cursos_labels|safe }};
+            var cursosValues = {{ cursos_values|safe }};
+            var turmasLabels = {{ turmas_labels|safe }};
+            var turmasValues = {{ turmas_values|safe }};
+
+            if (cursosValues.length > 0) {
+                var ctxCursos = document.getElementById('graficoCursos').getContext('2d');
+                new Chart(ctxCursos, {
+                    type: 'pie',
+                    data: {
+                        labels: cursosLabels,
+                        datasets: [{
+                            data: cursosValues,
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#9966FF']
+                        }]
+                    }
+                });
+            } else {
+                console.error("Nenhum dado disponível para o gráfico de cursos!");
+            }
+
+            if (turmasValues.length > 0) {
+                var ctxTurmas = document.getElementById('graficoTurmas').getContext('2d');
+                new Chart(ctxTurmas, {
+                    type: 'pie',
+                    data: {
+                        labels: turmasLabels,
+                        datasets: [{
+                            data: turmasValues,
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#9966FF']
+                        }]
+                    }
+                });
+            } else {
+                console.error("Nenhum dado disponível para o gráfico de turmas!");
+            }
+        });
+    </script>
+
+</body>
+</html>
