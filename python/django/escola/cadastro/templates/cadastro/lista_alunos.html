@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .chart-container {
-            width: 90%;  /* Reduzindo o tamanho dos gráficos */
+            width: 90%;
             max-width: 400px;
             margin: auto;
         }
@@ -35,8 +35,14 @@
                         {% for aluno in alunos %}
                         <tr>
                             <td>{{ aluno.nome }}</td>
-                            <td>{{ aluno.curso }}</td>
-                            <td>{{ aluno.turma }}</td>
+                            <td>
+                                {% for curso in aluno.cursos.all %}
+                                    {{ curso.nome }}{% if not forloop.last %}, {% endif %}
+                                {% empty %}
+                                    Nenhum curso cadastrado
+                                {% endfor %}
+                            </td>
+                            <td>{{ aluno.turma.nome }}</td>
                         </tr>
                         {% empty %}
                         <tr>
@@ -66,10 +72,10 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var cursosLabels = {{ cursos_labels|safe }};
-            var cursosValues = {{ cursos_values|safe }};
-            var turmasLabels = {{ turmas_labels|safe }};
-            var turmasValues = {{ turmas_values|safe }};
+            var cursosLabels = JSON.parse('{{ cursos_labels|safe }}');
+            var cursosValues = JSON.parse('{{ cursos_values|safe }}');
+            var turmasLabels = JSON.parse('{{ turmas_labels|safe }}');
+            var turmasValues = JSON.parse('{{ turmas_values|safe }}');
 
             if (cursosValues.length > 0) {
                 var ctxCursos = document.getElementById('graficoCursos').getContext('2d');

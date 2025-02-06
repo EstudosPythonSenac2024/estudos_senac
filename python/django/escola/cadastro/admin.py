@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Aluno, Curso, Turma
+from .models import Aluno, Curso, Turma, Contato
 
 # Permite adicionar cursos ao criar um aluno
 class CursoInline(admin.TabularInline):
@@ -13,3 +13,10 @@ class AlunoAdmin(admin.ModelAdmin):
 admin.site.register(Aluno, AlunoAdmin)
 admin.site.register(Curso)  # Ainda permite criar cursos separadamente
 admin.site.register(Turma)  # Ainda permite criar turmas separadamente
+
+class ContatoAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'email', 'data_envio')  # Exibe esses campos na lista
+    search_fields = ('nome', 'email')  # Permite buscar mensagens
+    list_filter = ('data_envio',)  # Filtro por data
+
+admin.site.register(Contato, ContatoAdmin)
