@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Saída</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/styles_forms.css' %}">
+</head>
+<body>
+    <h1>Registrar Saída de Veículo</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <p><strong>Placa:</strong> {{ registro.placa }}</p>
+        <p><strong>Modelo:</strong> {{ registro.modelo_carro }}</p>
+        <p><strong>Hora de Entrada:</strong> {{ registro.hora_entrada }}</p>
+
+        <label for="hora_saida">Hora de Saída:</label>
+        <input type="time" name="hora_saida" required>
+
+        <button type="submit" class="button-submit">Registrar Saída</button>
+    </form>
+
+    <br>
+    <a href="{% url 'dashboard' %}" class="button-submit">Voltar ao Dashboard</a>
+</body>
+</html>

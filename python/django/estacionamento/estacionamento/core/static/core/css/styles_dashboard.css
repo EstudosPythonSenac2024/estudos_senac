@@ -1,0 +1,43 @@
+/* Estilo geral do dashboard */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo da tabela do dashboard */
+table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Cabeçalho da tabela */
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Estilo dos botões */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    text-decoration: none;
+    color: white;
+    background: #28a745;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background: #218838;
+}

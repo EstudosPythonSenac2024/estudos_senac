@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle de Estacionamento</title>
+    {% load static %}  <!-- ADICIONE ESTA LINHA -->
+    <link rel="stylesheet" href="{% static 'core/css/styles_dashboard.css' %}">
+
+</head>
+<body>
+    <h1>Controle de Estacionamento</h1>
+    <p>Vagas Ocupadas: <strong>{{ vagas_ocupadas }}</strong></p>
+    <p>Vagas Disponíveis: <strong>{{ vagas_disponiveis }}</strong></p>
+    
+    <table>
+        <tr>
+            <th>Nº</th>
+            <th>Modelo</th>
+            <th>Placa</th>
+            <th>Data Entrada</th>
+            <th>Hora Entrada</th>
+            <th>Hora Saída</th>
+            <th>Status</th>
+            <th>Valor</th>
+        </tr>
+        {% for registro in registros %}
+        <tr>
+            <td>{{ registro.modelo_carro }}</td>
+            <td>{{ registro.placa }}</td>
+            <td>{{ registro.data_entrada }}</td>
+            <td>{{ registro.hora_entrada }}</td>
+            <td>{{ registro.hora_saida|default:"-" }}</td>
+            <td>{{ registro.get_status_pagamento_display }}</td>
+            <td>R${{ registro.valor_pago|default:"-" }}</td>
+            <td>
+                {% if not registro.hora_saida %}
+                    <a href="{% url 'registrar_saida' registro.id %}" class="button">Registrar Saída</a>
+                {% else %}
+                    ✅ Pago
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{% url 'cadastro_cliente' %}">Novo Cliente</a>
+    <a href="{% url 'registro_entrada' %}">Registrar Entrada</a>
+</body>
+</html>

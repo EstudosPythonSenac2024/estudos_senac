@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Cliente</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/styles_forms.css' %}">
+</head>
+<body>
+    <h1>Cadastro de Cliente</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button-submit">Salvar</button>
+    </form>
+
+    <br>
+    <a href="{% url 'dashboard' %}" class="button-submit">Voltar ao Dashboard</a>
+</body>
+</html>
