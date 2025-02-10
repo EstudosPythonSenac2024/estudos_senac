@@ -3,19 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de Cliente</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'core/css/styles_forms.css' %}">
+    <style>
+        table {
+            width: 60%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .button {
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button-delete {
+            background-color: #dc3545;
+        }
+    </style>
 </head>
 <body>
     <h1>Cadastro de Cliente</h1>
-    
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="button-submit">Salvar</button>
+        <button type="submit">Salvar</button>
     </form>
 
+    <h2>Clientes Cadastrados</h2>
+    {% if clientes %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Tipo</th>
+                <th>Ações</th>
+            </tr>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.id }}</td>
+                <td>{{ cliente.nome }}</td>
+                <td>{{ cliente.email }}</td>
+                <td>{{ cliente.telefone }}</td>
+                <td>{{ cliente.get_tipo_display }}</td>
+                <td>
+                    <a href="{% url 'editar_cliente' cliente.id %}" class="button">Editar</a>
+                    <a href="{% url 'deletar_cliente' cliente.id %}" class="button button-delete">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Nenhum cliente cadastrado ainda.</p>
+    {% endif %}
+
     <br>
-    <a href="{% url 'dashboard' %}" class="button-submit">Voltar ao Dashboard</a>
+    <a href="{% url 'dashboard' %}">Voltar ao Dashboard</a>
 </body>
 </html>
