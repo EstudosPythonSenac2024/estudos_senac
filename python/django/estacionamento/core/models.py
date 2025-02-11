@@ -15,6 +15,8 @@ class Cliente(models.Model):
     def __str__(self):
         return f"{self.nome} ({self.get_tipo_display()})"
 
+
+
 class RegistroEstacionamento(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     modelo_carro = models.CharField(max_length=50)
