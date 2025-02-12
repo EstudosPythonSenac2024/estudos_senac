@@ -6,10 +6,16 @@ class Cliente(models.Model):
         ('mensalista', 'Mensalista'),
         ('avulso', 'Avulso'),
     )
-    
+
     nome = models.CharField(max_length=100)
     email = models.EmailField()
     telefone = models.CharField(max_length=20)
+    cpf = models.CharField(max_length=14, unique=True)
+    modelo_carro = models.CharField(max_length=50)
+    placa = models.CharField(max_length=10, unique=True)
+    ano = models.IntegerField(default=2024)
+    cor = models.CharField(max_length=20)
+    marca = models.CharField(max_length=50)
     tipo = models.CharField(max_length=10, choices=TIPOS_CLIENTE, default='avulso')
 
     def __str__(self):
