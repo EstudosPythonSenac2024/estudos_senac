@@ -119,8 +119,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+""" STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'core/static'),
+]
+ """
 # Diretório onde os arquivos estáticos serão coletados
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+""" STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') """
 
 # Diretórios onde o Django buscará arquivos estáticos dentro dos apps
 #STATICFILES_DIRS = [
@@ -133,7 +138,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'core', 'static')
-]

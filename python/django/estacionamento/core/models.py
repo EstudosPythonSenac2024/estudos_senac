@@ -11,7 +11,7 @@ class Cliente(models.Model):
     email = models.EmailField()
     telefone = models.CharField(max_length=20)
     cpf = models.CharField(max_length=14, unique=True)
-    modelo_carro = models.CharField(max_length=50)
+    modelo = models.CharField(max_length=50)
     placa = models.CharField(max_length=10, unique=True)
     ano = models.IntegerField(default=2024)
     cor = models.CharField(max_length=20)

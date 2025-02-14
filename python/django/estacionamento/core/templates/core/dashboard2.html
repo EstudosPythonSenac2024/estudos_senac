@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle de Estacionamento</title>
+    <style>
+        .button {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            border-radius: 5px;
+            border: none;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .button-delete {
+            background-color: red;
+        }
+        .button-delete:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Controle de Estacionamento</h1>
+
+    <p><strong>Vagas Ocupadas:</strong> {{ vagas_ocupadas }}</p>
+    <p><strong>Vagas Disponíveis:</strong> <b>{{ vagas_disponiveis }}</b></p>
+
+    <hr>
+
+    <h2>Registros de Estacionamento</h2>
+    <table border="1">
+        <tr>
+            <th>Modelo</th>
+            <th>Placa</th>
+            <th>Data Entrada</th>
+            <th>Hora Entrada</th>
+            <th>Hora Saída</th>
+            <th>Status</th>
+            <th>Valor</th>
+            <th>Ações</th>
+        </tr>
+        {% for registro in registros %}
+        <tr>
+            <td>{{ registro.modelo_carro }}</td>
+            <td>{{ registro.placa }}</td>
+            <td>{{ registro.data_entrada }}</td>
+            <td>{{ registro.hora_entrada }}</td>
+            <td>{{ registro.hora_saida|default:"-" }}</td>
+            <td>{{ registro.status_pagamento }}</td>
+            <td>R$ {{ registro.valor_pago|default:"-" }}</td>
+            <td>
+                {% if not registro.hora_saida %}
+                    <a href="{% url 'registrar_saida' registro.id %}" class="button">Registrar Saída</a>
+                {% else %}
+                    ✅ Pago
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">Nenhum veículo registrado.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <hr>
+
+    <!-- 🚀 Botões de Ação -->
+    <a href="{% url 'cadastrar_cliente' %}" class="button">📌 Cadastrar Usuário</a>
+    <a href="{% url 'registro_entrada' %}" class="button">🚗 Registrar Entrada</a>
+
+</body>
+</html>

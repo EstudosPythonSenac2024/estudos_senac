@@ -6,7 +6,7 @@ class ClienteForm(forms.ModelForm):
 
     class Meta:
         model = Cliente
-        fields = ['nome', 'email', 'telefone', 'cpf', 'modelo_carro', 'placa', 'ano', 'cor', 'marca', 'tipo']
+        fields = ['nome', 'email', 'telefone', 'cpf', 'modelo', 'placa', 'ano', 'cor', 'marca', 'tipo']
 
 class EstacionamentoForm(forms.ModelForm):
     class Meta:
